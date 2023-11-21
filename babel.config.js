@@ -1,13 +1,7 @@
 module.exports = {
   presets: [
-    [
-      '@babel/preset-react',
-      {
-        pragma: 'dom',
-        pragmaFrag: 'DomFrag',
-        throwIfNamespace: false,
-        runtime: 'classic',
-      },
-    ],
+      '@babel/preset-env',
+      "@babel/preset-typescript",
+      ['@babel/preset-react', { runtime: 'automatic' }],
   ],
 }

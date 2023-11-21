@@ -1,7 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-module.exports = (_, argv) => {
+
+
+module.exports = (env, argv) => {
   const mode = argv.mode || 'production'
   const isDev = mode === 'development'
 
@@ -32,7 +34,7 @@ module.exports = (_, argv) => {
           type: 'asset/resource',
         },
         {
-          test: /\.tsx?$/,
+          test: /\.ts|tsx$/,
           use: 'ts-loader',
           exclude: /node_modules/,
         },
