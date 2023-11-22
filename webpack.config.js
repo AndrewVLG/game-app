@@ -1,8 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-
-
 module.exports = (env, argv) => {
   const mode = argv.mode || 'production'
   const isDev = mode === 'development'
@@ -31,7 +29,6 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(png|svg|jpg|jpeg|gif)$/i,
-          type: 'asset/resource',
         },
         {
           test: /\.ts|tsx$/,
@@ -40,19 +37,16 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(png|jpe?g|gif)$/i,
-          type: 'asset',
         },
         {
           test: /\.svg$/i,
-          type: 'asset',
-          use: ['url-loader'],
+
+          use: 'url-loader',
           resourceQuery: /url/,
         },
         {
-          test: /\.svg$/i,
-          issuer: /\.tsx$/,
-          resourceQuery: { not: [/url/] },
-          use: ['@svgr/webpack'],
+          test: /\.svg$/,
+          use: ['@svgr/webpack', 'url-loader'],
         },
       ],
     },
