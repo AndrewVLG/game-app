@@ -8,13 +8,14 @@ import { getButtonStyle } from './button.style'
 
 interface Props extends Omit<ButtonProps, 'color'> {
   color?: UIColor
+  dataTestId?: string
 }
 
 export const Button: FC<Props> = memo(
-  ({ color = 'red', children, ...props }) => {
+  ({ color = 'red', children, dataTestId, ...props }) => {
     const style = getButtonStyle(color)
     return (
-      <MUiButton sx={style} {...props}>
+      <MUiButton data-test-id={dataTestId} sx={style} {...props}>
         {children}
       </MUiButton>
     )

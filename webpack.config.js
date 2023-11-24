@@ -36,9 +36,6 @@ module.exports = (env, argv) => {
           exclude: /node_modules/,
         },
         {
-          test: /\.(png|jpe?g|gif)$/i,
-        },
-        {
           test: /\.svg$/i,
 
           use: 'url-loader',
