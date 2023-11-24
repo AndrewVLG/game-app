@@ -64,6 +64,11 @@ module.exports = {
             group: 'external',
             position: 'after',
           },
+          {
+            pattern: '../../../**',
+            group: 'parent',
+            position: 'before',
+          },
         ],
       },
     ],

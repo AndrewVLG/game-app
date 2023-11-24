@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react'
 
-import { getArray } from '../../../utils/getArray'
+import { getArray } from '../../../common/utils/getArray'
 
 import { Counter } from './Counter'
 
-const values = getArray(9, 1, (_, i) => i + 1)
+const values = getArray(9, null).map((_, i) => i + 1)
 
 const meta: Meta<typeof Counter> = {
   title: 'Counter',

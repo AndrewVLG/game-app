@@ -1,7 +1,8 @@
 import { FC, useState, useEffect, useRef, memo } from 'react'
-import { UIColor } from 'app/appTheme'
 
 import { Box } from '@mui/material'
+
+import { UIColor } from '../../../app/appTheme'
 
 import { Button } from '../../'
 
