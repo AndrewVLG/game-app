@@ -18,12 +18,12 @@ export const Cards: FC<Props> = memo(({ cards, active }) => {
   const items = cards.map((card) => {
     const name = getCardName(card)
     const image = card.image ? card.image : ''
-    const isActive = card.code === active
+
     return (
       <Card
         code={card.code}
         left={`${pos}px`}
-        active={isActive}
+        active={false}
         name={name}
         image={image}
         key={card.code}
