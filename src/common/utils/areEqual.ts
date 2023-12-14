@@ -1,3 +1,5 @@
+import {t} from './T'
+
 export const areEqual = (first: unknown, second: unknown) => {
   if (!first || !second) {
     return false
