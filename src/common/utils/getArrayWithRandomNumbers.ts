@@ -1,3 +1,5 @@
+import {t} from './T'
+
 interface Props {
   from: number
   to: number
