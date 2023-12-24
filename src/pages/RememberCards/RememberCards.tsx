@@ -14,14 +14,18 @@ import { Cards } from '../../components/RememberCards/Cards'
 import { Wrapper } from '../../components/RememberCards'
 import { Button } from '../../UI'
 import { selectCardsOnCanvas } from '../../app/redux/cardsSlice/selectors'
+import { setCurrent, setModalContent } from '../../app/redux/helpModalSlice/helpModalSlice'
+import { getAvailableHelpModal } from '../../common/utils/helpModal.utils'
 
 import { startButtonText } from './rememberCardsPage.const'
+import { rules } from './rememberCards.const'
 
 const counterValues = getArray(8, null).map((_, i) => i + 1)
 
+const availableHelpModal = getAvailableHelpModal()
+
 export const RememberCards = () => {
   const deckIdRef = useRef<string | null>(null)
-  const pageRef = useRef<HTMLDivElement>(null)
   const dispatch = useAppDispatch()
   const cards = useAppSelector(selectCardsOnCanvas)
 
@@ -44,10 +48,12 @@ export const RememberCards = () => {
 
   useEffect(() => {
     deckIdRef.current = localStorage.getItem('deck')
-  }, [dispatch])
-
+    dispatch(setModalContent({title: 'Запомни карты', message: rules}))
+    dispatch(setCurrent(RememberCards.name))
+    availableHelpModal.setDefault(RememberCards.name, true)
+  }, [])
   return (
-    <div ref={pageRef} style={rememberCardsPageStyle}>
+    <div style={rememberCardsPageStyle}>
       <Cards cards={cards} />
       <Wrapper>
         <Counter

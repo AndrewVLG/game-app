@@ -3,6 +3,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import { Middleware, combineReducers, configureStore } from '@reduxjs/toolkit'
 
 import { cardsReducer } from './cardsSlice/cardsSlice'
+import { helpModalReducer } from './helpModalSlice/helpModalSlice'
 
 const middleware: Middleware = (store) => (next) => (action) => {
   if (action.type !== 'cards/setTarget') {
@@ -16,6 +17,7 @@ const middleware: Middleware = (store) => (next) => (action) => {
 
 const reducer = combineReducers({
   cards: cardsReducer,
+  helpModal: helpModalReducer,
 })
 
 export const store = configureStore({

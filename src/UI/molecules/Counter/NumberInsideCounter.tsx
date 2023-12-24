@@ -13,7 +13,6 @@ interface Props {
 }
 
 export const NumbersInsideCounter: FC<Props> = ({ offset, values, color }) => {
-  console.log('asd')
   const style = getNumbersInsideCounterStyle(offset, color)
   return (
     <Box sx={style}>
