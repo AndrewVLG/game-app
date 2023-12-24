@@ -3,7 +3,7 @@ import { Alert, Snackbar, SnackbarOrigin } from '@mui/material'
 
 import { useAppSelector } from '../app/redux/store'
 import { selectIsWin } from '../app/redux/cardsSlice/selectors'
-import { Header } from '../components'
+import { Header, HelpModal } from '../components'
 
 const anchorOrigin: SnackbarOrigin = { horizontal: 'center', vertical: 'top' }
 const alertStyle = { width: '100%' }
@@ -14,6 +14,7 @@ export const Layout = () => {
   const redirect = pathname.length < 2 && <Navigate to="remember-cards" />
   return (
     <>
+      <HelpModal />
       <Snackbar open={isWin} anchorOrigin={anchorOrigin}>
         <Alert severity="success" sx={alertStyle}>
           Вы выиграли!
