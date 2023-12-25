@@ -1,21 +1,21 @@
-import { FC, memo, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { memo, useRef } from 'react'
 
-import { selectPick } from '../../app/redux/cardsSlice/selectors'
+import {
+  selectCardsOnCanvas,
+  selectPick,
+} from '../../app/redux/cardsSlice/selectors'
 import { Card as C } from '../../common/dto/cards.dto'
+import { useAppSelector } from '../../app/redux/store'
 
 import { Card } from './Card'
 import { cardsBlockStyle } from './rememberCardsPage.style'
 import { useCardMove } from './useCardMove'
 
-interface Props {
-  cards: Array<C>
-}
-
-export const Cards: FC<Props> = memo(({ cards }) => {
+export const Cards = memo(() => {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const pos = useCardMove(wrapperRef)
-  const pick = useSelector(selectPick)
+  const cards = useAppSelector(selectCardsOnCanvas)
+  const pick = useAppSelector(selectPick)
 
   const items = cards.map((card) => {
     const name = getCardName(card)

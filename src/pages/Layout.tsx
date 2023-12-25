@@ -1,4 +1,5 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
+
 import { Alert, Snackbar, SnackbarOrigin } from '@mui/material'
 
 import { useAppSelector } from '../app/redux/store'
