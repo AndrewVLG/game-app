@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../../app/redux/store'
+import { useAppDispatch } from '../../app/redux/store'
 import {
   asyncHash,
   fetchDrawCards,
@@ -13,48 +13,48 @@ import { Counter, OnChangeProps } from '../../UI/molecules/Counter/Counter'
 import { Cards } from '../../components/RememberCards/Cards'
 import { Wrapper } from '../../components/RememberCards'
 import { Button } from '../../UI'
-import { selectCardsOnCanvas } from '../../app/redux/cardsSlice/selectors'
-import { setCurrent, setModalContent } from '../../app/redux/helpModalSlice/helpModalSlice'
+import { setCurrent } from '../../app/redux/helpModalSlice/helpModalSlice'
 import { getAvailableHelpModal } from '../../common/utils/helpModal.utils'
 
 import { startButtonText } from './rememberCardsPage.const'
-import { rules } from './rememberCards.const'
 
 const counterValues = getArray(8, null).map((_, i) => i + 1)
-
-const availableHelpModal = getAvailableHelpModal()
 
 export const RememberCards = () => {
   const deckIdRef = useRef<string | null>(null)
   const dispatch = useAppDispatch()
-  const cards = useAppSelector(selectCardsOnCanvas)
-
+  const availableHelpModal = useMemo(
+    () => getAvailableHelpModal(RememberCards.name),
+    []
+  )
   const handleClickCounter = useCallback(
     ({ name, value }: OnChangeProps<number>) => {
       dispatch(setCount(value))
     },
     [dispatch]
   )
-
   const handleClickStart = useCallback(() => {
     if (deckIdRef.current) {
       dispatch(fetchDrawCards({ deck_id: deckIdRef.current }))
-      setTimeout(() => dispatch(asyncHash()), 4000)
-      return
+    } else {
+      dispatch(fetchShuffleCards())
     }
-    dispatch(fetchShuffleCards())
     setTimeout(() => dispatch(asyncHash()), 4000)
+  }, [])
+  const handleRuleButton = useCallback(() => {
+    availableHelpModal.setValue(RememberCards.name)
+    dispatch(setCurrent(null))
+    setTimeout(() => dispatch(setCurrent(RememberCards.name)), 100)
   }, [])
 
   useEffect(() => {
     deckIdRef.current = localStorage.getItem('deck')
-    dispatch(setModalContent({title: 'Запомни карты', message: rules}))
     dispatch(setCurrent(RememberCards.name))
-    availableHelpModal.setDefault(RememberCards.name, true)
+    availableHelpModal.setDefault(true)
   }, [])
   return (
     <div style={rememberCardsPageStyle}>
-      <Cards cards={cards} />
+      <Cards />
       <Wrapper>
         <Counter
           name="counter"
@@ -65,6 +65,9 @@ export const RememberCards = () => {
         />
         <Button dataTestId="start-button" onClick={handleClickStart}>
           {startButtonText}
+        </Button>
+        <Button variant="text" onClick={handleRuleButton}>
+          Правила
         </Button>
       </Wrapper>
     </div>
