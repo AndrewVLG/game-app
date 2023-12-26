@@ -3,7 +3,7 @@ import { FC, memo } from 'react'
 import { styled } from '@mui/material'
 
 const Img = styled('img')({
-  width: '226px',
+  width: '12rem',
   cursor: 'pointer',
   margin: '3px',
   boxShadow: '4px 4px 8px 0px rgba(0, 0, 0, 0.6)',
