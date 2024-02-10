@@ -1,10 +1,7 @@
-import { useCallback, useEffect, useMemo, useRef } from 'react'
+import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../app/redux/store'
-import {
-  asyncHash,
-  setCount,
-} from '../../app/redux/cardsSlice'
+import { asyncHash, setCount } from '../../app/redux/cardsSlice'
 import { getArray } from '../../common/utils/getArray'
 import { rememberCardsPageStyle } from '../../components/RememberCards/rememberCardsPage.style'
 import { Counter, OnChangeProps } from '../../UI/molecules/Counter/Counter'
@@ -20,12 +17,12 @@ import { startButtonText } from './rememberCardsPage.const'
 
 const counterValues = getArray(8, null).map((_, i) => i + 1)
 
-export const RememberCards = () => {
+export const RememberCards = memo(() => {
   const deckId = useAppSelector(selectDeckId)
   const deckIdRef = useRef<string | null>(null)
   const dispatch = useAppDispatch()
   const availableHelpModal = useMemo(
-    () => getAvailableHelpModal(RememberCards.name),
+    () => getAvailableHelpModal(RememberCards.displayName as string),
     []
   )
 
@@ -37,7 +34,6 @@ export const RememberCards = () => {
   )
 
   const handleClickStart = useCallback(() => {
-    console.log(deckIdRef.current)
     if (deckIdRef.current) {
       dispatch(getCards(deckIdRef.current))
     } else {
@@ -47,9 +43,9 @@ export const RememberCards = () => {
   }, [])
 
   const handleRuleButton = useCallback(() => {
-    availableHelpModal.setValue(RememberCards.name)
+    availableHelpModal.setValue(RememberCards.displayName)
     dispatch(setCurrent(null))
-    setTimeout(() => dispatch(setCurrent(RememberCards.name)), 100)
+    setTimeout(() => dispatch(setCurrent(RememberCards.displayName as string)), 100)
   }, [])
 
   useEffect(() => {
@@ -57,7 +53,7 @@ export const RememberCards = () => {
   }, [deckId])
 
   useEffect(() => {
-    dispatch(setCurrent(RememberCards.name))
+    dispatch(setCurrent(RememberCards.displayName as string))
     availableHelpModal.setDefault(true)
   }, [])
   return (
@@ -80,4 +76,6 @@ export const RememberCards = () => {
       </Wrapper>
     </div>
   )
-}
+})
+
+RememberCards.displayName = 'RememberCards'

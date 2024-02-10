@@ -1,10 +1,9 @@
-import { memo, useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 
 import {
   DialogContent,
   DialogTitle,
   FormControlLabel,
-  Theme,
   Typography,
 } from '@mui/material'
 
@@ -13,9 +12,9 @@ import { useAppDispatch, useAppSelector } from '../../app/redux/store'
 import { setCurrent } from '../../app/redux/helpModalSlice/helpModalSlice'
 import { Button, Modal, Checkbox } from '../../UI'
 import { getAvailableHelpModal } from '../../common/utils/helpModal.utils'
-import { rules } from './helpModal.const'
 
-const checkboxStyle = (theme: Theme) => ({color: theme.palette.common.white})
+import { rules } from './helpModal.const'
+import { checkboxStyle } from './helpModal.style'
 
 const getRule = () => {
   let current: string | null = null
@@ -31,17 +30,20 @@ const get = getRule()
 export const HelpModal = memo(() => {
   const { current } = useAppSelector(selectHelpModal)
   const dispatch = useAppDispatch()
-  const handleClose = () => {
+  
+  const handleClose = useCallback(() => {
     dispatch(setCurrent(null))
-  }
+  }, [])
 
   const availableHelpModal = useMemo(
     () => getAvailableHelpModal(current),
     [current]
   )
-  const handleChange = (_: any, checked: boolean) => {
+
+  const handleChange = useCallback((_: any, checked: boolean) => {
     availableHelpModal.setValue(!checked)
-  }
+  }, [availableHelpModal])
+
   const rule = useMemo(() => get(current), [current])
   const isOpen = availableHelpModal.getValue()
 

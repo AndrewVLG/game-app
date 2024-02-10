@@ -3,7 +3,7 @@ import { createSelector } from '@reduxjs/toolkit'
 import { getArray } from '../../../common/utils/getArray'
 import { emptyCard } from '../../../pages/RememberCards/rememberCardsPage.const'
 
-import { RootState, store } from '../store'
+import { RootState } from '../store'
 
 export const selectPick = (store: RootState) => store.cards.pick
 export const selectIsWin = (store: RootState) => store.cards.isWin
