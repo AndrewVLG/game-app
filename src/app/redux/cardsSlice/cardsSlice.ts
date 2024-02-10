@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { Card } from '../../../common/dto/cards.dto'
+import { Card, DrawCards } from '../../../common/dto/cards.dto'
 import { areEqual } from '../../../common/utils/areEqual'
 
-import { fetchDrawCards, fetchShuffleCards, asyncHash } from './asyncThunks'
+import { asyncHash } from './asyncThunks'
 
 interface InitialState {
   count: number
@@ -79,30 +79,21 @@ const cardSlice = createSlice({
         state.cardsOnCanvas.map((card) => card.code)
       )
     },
+
+    setIsLoading(state, { payload }: PayloadAction<boolean>) {
+      state.isLoading = payload
+    },
+    setCards(
+      state,
+      { payload }: PayloadAction<{ data: DrawCards; deck_id: string }>
+    ) {
+      state.deck_id = payload.deck_id
+      state.cardsOnCanvas = payload.data.cards
+      state.result = payload.data.cards.map((card) => card.code)
+      state.remaining = payload.data.remaining
+    },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchShuffleCards.pending, (state) => {
-      state.isLoading = true
-    })
-    builder.addCase(fetchShuffleCards.fulfilled, (state, { payload }) => {
-      state.deck_id = payload.deck_id
-      state.cardsOnCanvas = payload.data.cards
-      state.result = payload.data.cards.map((card) => card.code)
-      state.remaining = payload.data.remaining
-      state.isLoading = false
-    })
-
-    builder.addCase(fetchDrawCards.pending, (state) => {
-      state.isLoading = true
-    })
-    builder.addCase(fetchDrawCards.fulfilled, (state, { payload }) => {
-      state.deck_id = payload.deck_id
-      state.cardsOnCanvas = payload.data.cards
-      state.result = payload.data.cards.map((card) => card.code)
-      state.remaining = payload.data.remaining
-      state.isLoading = false
-    })
-
     builder.addCase(asyncHash.pending, (state) => {
       state.isLoading = true
     })
@@ -122,4 +113,6 @@ export const {
   makePickInactive,
   setTarget,
   setIsWin,
+  setIsLoading,
+  setCards,
 } = cardSlice.actions

@@ -22,3 +22,6 @@ export const selectCardsOnCanvas = createSelector(
       : cards
   }
 )
+
+export const selectDeckId = (store: RootState) => store.cards.deck_id
+export const selectRemaining = (store: RootState) => store.cards.remaining
