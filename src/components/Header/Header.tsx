@@ -1,14 +1,11 @@
-import { MenuIcon } from '../../assets/svg'
-import { Button } from '../../UI'
+import { Box } from '@mui/material'
 
-import { buttonStyle } from './header.style'
+import {  MenuButton } from '../../UI'
 
 export const Header = () => {
   return (
-    <Button
-      sx={buttonStyle}
-    >
-      <MenuIcon height="50px" width="50px" />
-    </Button>
+    <Box sx={{height: '50px', width: 'auto',}}>
+      <MenuButton />
+    </Box>
   )
 }
