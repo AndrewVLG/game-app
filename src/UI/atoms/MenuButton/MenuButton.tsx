@@ -1,6 +1,6 @@
 import { FC, memo, useCallback, useState } from 'react'
 
-import { Box, Button, SxProps } from '@mui/material'
+import { Box, Button, SxProps, useTheme } from '@mui/material'
 
 import {
   bottomElementIsActive,
@@ -19,7 +19,8 @@ export const MenuButton: FC<Props> = memo(({ sx = {}, onClick }) => {
   const handleMouseEnter = useCallback(() => setIsHover(true), [])
   const handleMouseLeave = useCallback(() => setIsHover(false), [])
 
-  const style = { ...buttonStyle, ...sx }
+  const theme = useTheme()
+  const style = { ...buttonStyle(theme), ...sx }
   return (
     <Button
       onClick={onClick && onClick}

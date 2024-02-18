@@ -11,7 +11,6 @@ import { selectCount, selectRemaining } from './selectors'
 
 export function* fetchShuffleCards() {
   try {
-    yield take(getShuffledCards)
     const { deck_id }: CardsResponse = yield call(cardsApi.shuffleCards)
     yield put(setIsLoading(true))
 
