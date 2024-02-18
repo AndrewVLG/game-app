@@ -3,13 +3,15 @@ import { PropsWithChildren, FC } from 'react'
 import { Box, Stack, SxProps } from '@mui/material'
 
 const style: SxProps = {
-  height: '40vh',
-  width: '50vw',
-  border: '2px solid red',
+  display: 'grid',
+  gridTemplateColumns: '0.7fr 1.3fr',
+  gridTemplateRows: '1.1fr 0.9fr',
+  height: '280px',
+  width: '250px',
   borderRadius: '6px',
   position: 'absolute',
-  bottom: '5px',
-  right: '5px',
+  bottom: '50px',
+  right: '50px',
   padding: '10px',
 }
 const stackStyle: SxProps = {
@@ -19,9 +21,7 @@ const stackStyle: SxProps = {
 export const Wrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <Box sx={style}>
-      <Stack sx={stackStyle} spacing={1}>
         {children}
-      </Stack>
     </Box>
   )
 }

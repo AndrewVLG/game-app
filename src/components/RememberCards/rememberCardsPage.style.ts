@@ -1,6 +1,8 @@
 import { CSSProperties } from 'react'
 
-export const rememberCardsPageStyle: CSSProperties = {
+import { SxProps } from '@mui/material'
+
+export const rememberCardsPageStyle: SxProps = {
   height: 'calc(100vh - 67px)',
   width: '100%',
   overflow: 'hidden',

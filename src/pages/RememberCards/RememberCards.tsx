@@ -1,5 +1,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 
+import { Box } from '@mui/material'
+
 import { useAppDispatch, useAppSelector } from '../../app/redux/store'
 import { asyncHash, setCount } from '../../app/redux/cardsSlice'
 import { getArray } from '../../common/utils/getArray'
@@ -14,6 +16,11 @@ import { selectDeckId } from '../../app/redux/cardsSlice/selectors'
 import { getAvailableHelpModal } from '../../common/utils/helpModal.utils'
 
 import { startButtonText } from './rememberCardsPage.const'
+import {
+  bottomContainerStyle,
+  buttonStyle,
+  topContainerStyle,
+} from './rememberCards.style'
 
 const counterValues = getArray(8, null).map((_, i) => i + 1)
 
@@ -45,7 +52,10 @@ export const RememberCards = memo(() => {
   const handleRuleButton = useCallback(() => {
     availableHelpModal.setValue(RememberCards.displayName)
     dispatch(setCurrent(null))
-    setTimeout(() => dispatch(setCurrent(RememberCards.displayName as string)), 100)
+    setTimeout(
+      () => dispatch(setCurrent(RememberCards.displayName as string)),
+      100
+    )
   }, [])
 
   useEffect(() => {
@@ -57,24 +67,32 @@ export const RememberCards = memo(() => {
     availableHelpModal.setDefault(true)
   }, [])
   return (
-    <div style={rememberCardsPageStyle}>
+    <Box sx={rememberCardsPageStyle}>
       <Cards />
       <Wrapper>
-        <Counter
-          name="counter"
-          values={counterValues}
-          onChange={handleClickCounter}
-          color="red"
-          defaultValue={5}
-        />
-        <Button dataTestId="start-button" onClick={handleClickStart}>
-          {startButtonText}
-        </Button>
-        <Button variant="text" onClick={handleRuleButton}>
-          Правила
-        </Button>
+        <Box sx={topContainerStyle}>
+          <Counter
+            name="counter"
+            values={counterValues}
+            onChange={handleClickCounter}
+            color="red"
+            defaultValue={5}
+          />
+        </Box>
+        <Box sx={bottomContainerStyle}>
+          <Button
+            style={buttonStyle}
+            dataTestId="start-button"
+            onClick={handleClickStart}
+          >
+            {startButtonText}
+          </Button>
+          <Button style={buttonStyle} variant="text" onClick={handleRuleButton}>
+            Правила
+          </Button>
+        </Box>
       </Wrapper>
-    </div>
+    </Box>
   )
 })
 
