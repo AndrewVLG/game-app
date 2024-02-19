@@ -2,6 +2,7 @@ import { memo, useRef } from 'react'
 
 import {
   selectCardsOnCanvas,
+  selectIsWin,
   selectPick,
 } from '../../app/redux/cardsSlice/selectors'
 import { Card as C } from '../../common/dto/cards.dto'
@@ -13,9 +14,10 @@ import { useCardMove } from './useCardMove'
 
 export const Cards = memo(() => {
   const wrapperRef = useRef<HTMLDivElement>(null)
-  const pos = useCardMove(wrapperRef)
   const cards = useAppSelector(selectCardsOnCanvas)
   const pick = useAppSelector(selectPick)
+  const isWin = useAppSelector(selectIsWin)
+  const pos = useCardMove(wrapperRef, isWin)
 
   const items = cards.map((card) => {
     const name = getCardName(card)
@@ -24,7 +26,7 @@ export const Cards = memo(() => {
     return (
       <Card
         code={card.code}
-        left={`${pos}px`}
+        left={pick === card.code ? `${pos}px` : '0px'}
         active={isActive}
         name={name}
         image={image}

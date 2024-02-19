@@ -32,7 +32,7 @@ export const Card: FC<Props> = memo(
           boxShadow: '4px 4px 8px 9px rgba(34, 60, 80, 0.2)',
         }
       : {}
-
+    console.log('card')
     return (
       <Img
         data-code={code}

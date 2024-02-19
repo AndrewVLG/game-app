@@ -3,7 +3,7 @@ import { memo, useCallback, useEffect, useMemo, useRef } from 'react'
 import { Box } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from '../../app/redux/store'
-import { asyncHash, setCount } from '../../app/redux/cardsSlice'
+import { asyncHash, setCount, setIsWin } from '../../app/redux/cardsSlice'
 import { getArray } from '../../common/utils/getArray'
 import { rememberCardsPageStyle } from '../../components/RememberCards/rememberCardsPage.style'
 import { Counter, OnChangeProps } from '../../UI/molecules/Counter/Counter'
@@ -12,7 +12,7 @@ import { Wrapper } from '../../components/RememberCards'
 import { Button } from '../../UI'
 import { setCurrent } from '../../app/redux/helpModalSlice/helpModalSlice'
 import { getCards, getShuffledCards } from '../../app/redux/cardsSlice/actions'
-import { selectDeckId } from '../../app/redux/cardsSlice/selectors'
+import { selectDeckId, selectIsLoading } from '../../app/redux/cardsSlice/selectors'
 import { getAvailableHelpModal } from '../../common/utils/helpModal.utils'
 
 import { startButtonText } from './rememberCardsPage.const'
@@ -41,6 +41,7 @@ export const RememberCards = memo(() => {
   )
 
   const handleClickStart = useCallback(() => {
+    dispatch(setIsWin(false))
     if (deckIdRef.current) {
       dispatch(getCards(deckIdRef.current))
     } else {

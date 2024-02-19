@@ -20,7 +20,7 @@ const initialState: InitialState = {
   count: 5,
   cardsOnCanvas: [],
   result: [],
-  isLoading: true,
+  isLoading: false,
   deck_id: '',
   remaining: 0,
   pick: null,

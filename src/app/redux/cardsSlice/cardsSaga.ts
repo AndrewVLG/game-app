@@ -1,4 +1,4 @@
-import { call, put, select, take, takeEvery } from 'redux-saga/effects'
+import { call, fork, put, select, take, takeEvery } from 'redux-saga/effects'
 
 import { PayloadAction } from '@reduxjs/toolkit'
 
@@ -13,11 +13,10 @@ export function* fetchShuffleCards() {
   try {
     const { deck_id }: CardsResponse = yield call(cardsApi.shuffleCards)
     yield put(setIsLoading(true))
-
     const count: number = yield select(selectCount)
 
     if (deck_id) {
-      localStorage.setItem('deck', deck_id)
+      yield fork((key: string, value: string) => localStorage.setItem(key, value), 'deck', deck_id)
     }
     const data: DrawCards = yield call(cardsApi.drawCards, { count, deck_id })
     yield put(setCards({ data, deck_id }))

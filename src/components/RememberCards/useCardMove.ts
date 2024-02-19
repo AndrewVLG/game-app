@@ -13,7 +13,7 @@ import {
 import { useAppDispatch } from '../../app/redux/store'
 import { moveCard, setPick, setTarget } from '../../app/redux/cardsSlice'
 
-export const useCardMove = (ref: RefObject<HTMLDivElement>): number => {
+export const useCardMove = (ref: RefObject<HTMLDivElement>, isWin: boolean): number => {
   const [isEnabled, setEnabled] = useState(false)
   const [pos, setPos] = useState<number>(0)
 
@@ -26,7 +26,7 @@ export const useCardMove = (ref: RefObject<HTMLDivElement>): number => {
       click
         .pipe(
           filter((e) =>
-            (e.target as HTMLImageElement).hasAttribute('data-code')
+            (e.target as HTMLImageElement).hasAttribute('data-code') && !isWin
           ),
           take(1),
           tap((e) => {
@@ -69,7 +69,7 @@ export const useCardMove = (ref: RefObject<HTMLDivElement>): number => {
         )
         .subscribe((value) => setPos(value))
     }
-  }, [isEnabled, dispatch])
+  }, [isEnabled, dispatch, isWin])
 
   return pos
 }
