@@ -7,7 +7,7 @@ const Img = styled('img')({
   cursor: 'pointer',
   margin: '3px',
   boxShadow: '4px 4px 8px 0px rgba(0, 0, 0, 0.6)',
-  transition: 'transform 0.5s, box-shadow 0.5s',
+  transition: 'transform 0.1s, box-shadow 0.1s',
   borderRadius: '14px',
 })
 
@@ -26,13 +26,12 @@ export const Card: FC<Props> = memo(
     }
     const style = active
       ? {
-          transform: 'scale(1.2, 1.2)',
+          transform: 'translate(0, 100%)',
           left,
           position: 'relative',
           boxShadow: '4px 4px 8px 9px rgba(34, 60, 80, 0.2)',
         }
       : {}
-    console.log('card')
     return (
       <Img
         data-code={code}

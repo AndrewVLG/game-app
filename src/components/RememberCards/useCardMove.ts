@@ -20,8 +20,8 @@ export const useCardMove = (ref: RefObject<HTMLDivElement>, isWin: boolean): num
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    const click = fromEvent(ref.current as HTMLDivElement, 'click')
-    const moves = fromEvent(document, 'mousemove')
+    const click = fromEvent<MouseEvent>(ref.current as HTMLDivElement, 'click')
+    const moves = fromEvent<MouseEvent>(document, 'mousemove')
     if (!isEnabled) {
       click
         .pipe(
@@ -44,7 +44,7 @@ export const useCardMove = (ref: RefObject<HTMLDivElement>, isWin: boolean): num
           }),
           switchMap((clickTarget) =>
             moves.pipe(
-              tap((e: Event) => {
+              tap((e) => {
                 if ((e.target as HTMLImageElement).hasAttribute('data-code')) {
                   dispatch(
                     setTarget(
@@ -55,8 +55,8 @@ export const useCardMove = (ref: RefObject<HTMLDivElement>, isWin: boolean): num
                   )
                 }
               }),
-              map((e: any) => {
-                return e.clientX - clickTarget.x + clickTarget.width / 5
+              map((e) => {
+                return e.clientX - clickTarget.x - clickTarget.width / 2
               }),
               takeUntil(click)
             )
