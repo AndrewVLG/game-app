@@ -1,4 +1,4 @@
-import { FC, useState, useEffect, useRef, memo } from 'react'
+import { FC, useState, useEffect, useRef, memo, useMemo, useCallback } from 'react'
 
 import { Box } from '@mui/material'
 
@@ -23,9 +23,10 @@ interface Props {
 const _blockHeight: number = 70
 export const Counter: FC<Props> = memo(
   ({ onChange, values, name, defaultValue, color = 'red' }) => {
-    const defaultValueIndex = defaultValue
-      ? values.findIndex((el) => el === defaultValue)
-      : 0
+    const defaultValueIndex = useMemo(
+      () => (defaultValue ? values.findIndex((el) => el === defaultValue) : 0),
+      [defaultValue, values]
+    )
 
     if (defaultValueIndex < 0) {
       throw new Error(_errorText)
@@ -33,20 +34,19 @@ export const Counter: FC<Props> = memo(
     const [index, setIndex] = useState<number>(-defaultValueIndex)
     const update = useRef<boolean>(false)
 
-    const handlerUpClick = () => {
+    const handlerUpClick = useCallback(() => {
       setIndex((prev) => prev - 1)
-    }
+    }, [])
 
-    const handlerDownClick = () => {
+    const handlerDownClick = useCallback(() => {
       setIndex((prev) => prev + 1)
-    }
+    }, [])
 
     useEffect(() => {
       if (!update.current) {
         update.current = true
         return
       }
-
       onChange && onChange({ name, value: values[Math.abs(index)] })
     }, [index, onChange, values, name])
 

@@ -8,7 +8,7 @@ const Img = styled('img')({
   margin: '3px',
   boxShadow: '4px 4px 8px 0px rgba(0, 0, 0, 0.6)',
   transition: 'transform 0.1s, box-shadow 0.1s',
-  borderRadius: '14px',
+  borderRadius: '1rem',
 })
 
 interface Props {
