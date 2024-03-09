@@ -1,6 +1,7 @@
-import { FC, memo } from 'react'
+import { FC, memo, useEffect, useRef } from 'react'
 
 import { styled } from '@mui/material'
+import gsap from 'gsap'
 
 const Img = styled('img')({
   width: '12rem',
@@ -19,21 +20,30 @@ interface Props {
   left: string
   code: string
 }
+
 export const Card: FC<Props> = memo(
   ({ image, onClick, name, active, left, code }) => {
+    const ref = useRef<HTMLImageElement | null>(null)
     const handleClick = () => {
       onClick && onClick(image)
     }
-    const style = active
-      ? {
-          transform: 'translate(0, 100%)',
-          left,
+    const style = {
           position: 'relative',
           boxShadow: '4px 4px 8px 9px rgba(34, 60, 80, 0.2)',
         }
-      : {}
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if(active) {
+        gsap.to(ref.current, { y: '100%', duration: 0.5 })
+      } else {
+        gsap.to(ref.current, { y: 0, duration: 0.5 })
+      }
+    })
+    return () => ctx.kill()
+  }, [active])
     return (
       <Img
+      ref={ref}
         data-code={code}
         data-testid="card"
         sx={style}
